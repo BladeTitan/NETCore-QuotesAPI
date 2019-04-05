@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -13,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using QuotesApi.Data;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace QuotesApi
 {
@@ -43,6 +45,20 @@ namespace QuotesApi
                 options.Authority = "https://bladetitan.eu.auth0.com/";
                 options.Audience = "https://localhost:44320/";
             });
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info
+                {
+                    Title = "Swagger Sample",
+                    Version = "v1",
+                    // You can also set Description, Contact, License, TOS...
+                });
+
+                // Configure Swagger to use the xml documentation file
+                var xmlFile = Path.ChangeExtension(typeof(Startup).Assembly.Location, ".xml");
+                c.IncludeXmlComments(xmlFile);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,6 +79,12 @@ namespace QuotesApi
             app.UseResponseCaching();
             app.UseAuthentication();
             app.UseMvc();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger Sample");
+            });
         }
     }
 }

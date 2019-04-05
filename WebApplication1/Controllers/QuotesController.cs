@@ -23,9 +23,13 @@ namespace QuotesApi.Controllers
             _quotesDbContext = quotesDbContext;
         }
 
-        // GET: api/Quotes
+        /// <summary>
+        /// List all public gists sorted by most recently updated to least recently updated.
+        /// </summary>
+        /// <remarks>With pagination, you can fetch up to 3000 gists. For example, you can fetch 100 pages with 30 gists per page or 30 pages with 100 gists per page.</remarks>
         [HttpGet]
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Client)]
+        [ProducesResponseType(200, Type = typeof(Quote[]))]
         public IActionResult Get(string sort)
         {
             IQueryable<Quote> quotes;
@@ -46,7 +50,12 @@ namespace QuotesApi.Controllers
             return StatusCode(StatusCodes.Status200OK, quotes);
         }
 
+        /// <summary>
+        /// List all public gists sorted by most recently updated to least recently updated.
+        /// </summary>
+        /// <remarks>With pagination, you can fetch up to 3000 gists. For example, you can fetch 100 pages with 30 gists per page or 30 pages with 100 gists per page.</remarks>
         [HttpGet("[action]")]
+        [ProducesResponseType(200, Type = typeof(Quote[]))]
         public IActionResult PagingQuote(int? pageNumber, int? pageSize)
         {
             var quotes = _quotesDbContext.Quotes;
@@ -56,7 +65,12 @@ namespace QuotesApi.Controllers
             return StatusCode(StatusCodes.Status200OK, quotes.Skip((currentPage - 1) * currentSize).Take(currentSize));
         }
 
+        /// <summary>
+        /// List all public gists sorted by most recently updated to least recently updated.
+        /// </summary>
+        /// <remarks>With pagination, you can fetch up to 3000 gists. For example, you can fetch 100 pages with 30 gists per page or 30 pages with 100 gists per page.</remarks>
         [HttpGet("[action]")]
+        [ProducesResponseType(200, Type = typeof(Quote[]))]
         public IActionResult SearchQuote(string type)
         {
             var quotes = _quotesDbContext.Quotes.Where(q => q.Type.Contains(type));
@@ -64,7 +78,12 @@ namespace QuotesApi.Controllers
             return StatusCode(StatusCodes.Status200OK, quotes);
         }
 
+        /// <summary>
+        /// List all public gists sorted by most recently updated to least recently updated.
+        /// </summary>
+        /// <remarks>With pagination, you can fetch up to 3000 gists. For example, you can fetch 100 pages with 30 gists per page or 30 pages with 100 gists per page.</remarks>
         [HttpGet("[action]")]
+        [ProducesResponseType(200, Type = typeof(Quote[]))]
         public IActionResult MyQuotes(string type)
         {
             string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
@@ -72,9 +91,14 @@ namespace QuotesApi.Controllers
 
             return StatusCode(StatusCodes.Status200OK, quotes);
         }
-
-        // GET: api/Quotes/5
+        
+        /// <summary>
+        /// List all public gists sorted by most recently updated to least recently updated.
+        /// </summary>
+        /// <remarks>With pagination, you can fetch up to 3000 gists. For example, you can fetch 100 pages with 30 gists per page or 30 pages with 100 gists per page.</remarks>
         [HttpGet("{id}", Name = "Get")]
+        [ProducesResponseType(200, Type = typeof(Quote))]
+        [ProducesResponseType(404, Type = typeof(void))]
         public IActionResult Get(int id)
         {
             var quote = _quotesDbContext.Quotes.Find(id);
@@ -86,15 +110,23 @@ namespace QuotesApi.Controllers
 
             return StatusCode(StatusCodes.Status200OK, quote);
         }
-        
+
+        /// <summary>
+        /// List all public gists sorted by most recently updated to least recently updated.
+        /// </summary>
+        /// <remarks>With pagination, you can fetch up to 3000 gists. For example, you can fetch 100 pages with 30 gists per page or 30 pages with 100 gists per page.</remarks>
         [HttpGet("[action]/{id}")]
         public int Test(int id)
         {
             return id;
         }
 
-        // POST: api/Quotes
+        /// <summary>
+        /// List all public gists sorted by most recently updated to least recently updated.
+        /// </summary>
+        /// <remarks>With pagination, you can fetch up to 3000 gists. For example, you can fetch 100 pages with 30 gists per page or 30 pages with 100 gists per page.</remarks>
         [HttpPost]
+        [ProducesResponseType(201, Type = typeof(void))]
         public IActionResult Post([FromBody] Quote quote)
         {
             string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
@@ -104,8 +136,14 @@ namespace QuotesApi.Controllers
             return StatusCode(StatusCodes.Status201Created);
         }
 
-        // PUT: api/Quotes/5
+        /// <summary>
+        /// List all public gists sorted by most recently updated to least recently updated.
+        /// </summary>
+        /// <remarks>With pagination, you can fetch up to 3000 gists. For example, you can fetch 100 pages with 30 gists per page or 30 pages with 100 gists per page.</remarks>
         [HttpPut("{id}")]
+        [ProducesResponseType(200, Type = typeof(void))]
+        [ProducesResponseType(403, Type = typeof(void))]
+        [ProducesResponseType(404, Type = typeof(void))]
         public IActionResult Put(int id, [FromBody] Quote newQuote)
         {
             string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
@@ -118,7 +156,7 @@ namespace QuotesApi.Controllers
 
             if (userId != oldQuote.UserId)
             {
-                return StatusCode(StatusCodes.Status404NotFound, "You can't Update this Record.");
+                return StatusCode(StatusCodes.Status403Forbidden, "You can't Update this Record.");
             }
 
             oldQuote.Title = newQuote.Title;
@@ -131,8 +169,14 @@ namespace QuotesApi.Controllers
             return StatusCode(StatusCodes.Status200OK, "Record Updated Successfully");
         }
 
-        // DELETE: api/ApiWithActions/5
+        /// <summary>
+        /// List all public gists sorted by most recently updated to least recently updated.
+        /// </summary>
+        /// <remarks>With pagination, you can fetch up to 3000 gists. For example, you can fetch 100 pages with 30 gists per page or 30 pages with 100 gists per page.</remarks>
         [HttpDelete("{id}")]
+        [ProducesResponseType(200, Type = typeof(void))]
+        [ProducesResponseType(403, Type = typeof(void))]
+        [ProducesResponseType(404, Type = typeof(void))]
         public IActionResult Delete(int id)
         {
             string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
@@ -145,7 +189,7 @@ namespace QuotesApi.Controllers
 
             if (userId != quote.UserId)
             {
-                return StatusCode(StatusCodes.Status404NotFound, "You can't Update this Record.");
+                return StatusCode(StatusCodes.Status403Forbidden, "You can't Update this Record.");
             }
 
             _quotesDbContext.Remove(quote);
