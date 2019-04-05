@@ -50,9 +50,8 @@ namespace QuotesApi
             {
                 c.SwaggerDoc("v1", new Info
                 {
-                    Title = "Swagger Sample",
-                    Version = "v1",
-                    // You can also set Description, Contact, License, TOS...
+                    Title = "Quotes API",
+                    Version = "v1"
                 });
 
                 // Configure Swagger to use the xml documentation file

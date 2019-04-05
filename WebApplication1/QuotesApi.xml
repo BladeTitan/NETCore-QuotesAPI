@@ -6,57 +6,51 @@
     <members>
         <member name="M:QuotesApi.Controllers.QuotesController.Get(System.String)">
             <summary>
-            List all public gists sorted by most recently updated to least recently updated.
+            List all Quotes which can be sorted desc or asc.
             </summary>
-            <remarks>With pagination, you can fetch up to 3000 gists. For example, you can fetch 100 pages with 30 gists per page or 30 pages with 100 gists per page.</remarks>
+            <param name="sort"></param>
         </member>
         <member name="M:QuotesApi.Controllers.QuotesController.PagingQuote(System.Nullable{System.Int32},System.Nullable{System.Int32})">
             <summary>
-            List all public gists sorted by most recently updated to least recently updated.
+            List quotes in paginated chunks.
             </summary>
-            <remarks>With pagination, you can fetch up to 3000 gists. For example, you can fetch 100 pages with 30 gists per page or 30 pages with 100 gists per page.</remarks>
+            <param name="pageNumber">Defaults to 5 when no value is entered.</param>
+            <param name="pageSize">Defaults to 1 if no value has been entered.</param>
         </member>
         <member name="M:QuotesApi.Controllers.QuotesController.SearchQuote(System.String)">
             <summary>
-            List all public gists sorted by most recently updated to least recently updated.
+            List all quotes which are of the specified type.
             </summary>
-            <remarks>With pagination, you can fetch up to 3000 gists. For example, you can fetch 100 pages with 30 gists per page or 30 pages with 100 gists per page.</remarks>
+            <param name="type"></param>
         </member>
         <member name="M:QuotesApi.Controllers.QuotesController.MyQuotes(System.String)">
             <summary>
-            List all public gists sorted by most recently updated to least recently updated.
+            List all quotes that have been uploaded by the authenticated user.
             </summary>
-            <remarks>With pagination, you can fetch up to 3000 gists. For example, you can fetch 100 pages with 30 gists per page or 30 pages with 100 gists per page.</remarks>
+            <param name="type"></param>
         </member>
         <member name="M:QuotesApi.Controllers.QuotesController.Get(System.Int32)">
             <summary>
-            List all public gists sorted by most recently updated to least recently updated.
+            List a specific quote.
             </summary>
-            <remarks>With pagination, you can fetch up to 3000 gists. For example, you can fetch 100 pages with 30 gists per page or 30 pages with 100 gists per page.</remarks>
-        </member>
-        <member name="M:QuotesApi.Controllers.QuotesController.Test(System.Int32)">
-            <summary>
-            List all public gists sorted by most recently updated to least recently updated.
-            </summary>
-            <remarks>With pagination, you can fetch up to 3000 gists. For example, you can fetch 100 pages with 30 gists per page or 30 pages with 100 gists per page.</remarks>
+            <param name="id">The stored id of the quote object.</param>
         </member>
         <member name="M:QuotesApi.Controllers.QuotesController.Post(QuotesApi.Models.Quote)">
             <summary>
-            List all public gists sorted by most recently updated to least recently updated.
+            Insert a new Quote into the database.
             </summary>
-            <remarks>With pagination, you can fetch up to 3000 gists. For example, you can fetch 100 pages with 30 gists per page or 30 pages with 100 gists per page.</remarks>
         </member>
         <member name="M:QuotesApi.Controllers.QuotesController.Put(System.Int32,QuotesApi.Models.Quote)">
             <summary>
-            List all public gists sorted by most recently updated to least recently updated.
+            Update a specific Quote in the database.
             </summary>
-            <remarks>With pagination, you can fetch up to 3000 gists. For example, you can fetch 100 pages with 30 gists per page or 30 pages with 100 gists per page.</remarks>
+            <param name="id">The id of the quote.</param>
         </member>
         <member name="M:QuotesApi.Controllers.QuotesController.Delete(System.Int32)">
             <summary>
-            List all public gists sorted by most recently updated to least recently updated.
+            Delete a specific Quote in the database.
             </summary>
-            <remarks>With pagination, you can fetch up to 3000 gists. For example, you can fetch 100 pages with 30 gists per page or 30 pages with 100 gists per page.</remarks>
+            <param name="id">The id of the quote.</param>
         </member>
     </members>
 </doc>

@@ -24,9 +24,9 @@ namespace QuotesApi.Controllers
         }
 
         /// <summary>
-        /// List all public gists sorted by most recently updated to least recently updated.
+        /// List all Quotes which can be sorted desc or asc.
         /// </summary>
-        /// <remarks>With pagination, you can fetch up to 3000 gists. For example, you can fetch 100 pages with 30 gists per page or 30 pages with 100 gists per page.</remarks>
+        /// <param name="sort"></param>
         [HttpGet]
         [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Client)]
         [ProducesResponseType(200, Type = typeof(Quote[]))]
@@ -51,9 +51,10 @@ namespace QuotesApi.Controllers
         }
 
         /// <summary>
-        /// List all public gists sorted by most recently updated to least recently updated.
+        /// List quotes in paginated chunks.
         /// </summary>
-        /// <remarks>With pagination, you can fetch up to 3000 gists. For example, you can fetch 100 pages with 30 gists per page or 30 pages with 100 gists per page.</remarks>
+        /// <param name="pageNumber">Defaults to 5 when no value is entered.</param>
+        /// <param name="pageSize">Defaults to 1 if no value has been entered.</param>
         [HttpGet("[action]")]
         [ProducesResponseType(200, Type = typeof(Quote[]))]
         public IActionResult PagingQuote(int? pageNumber, int? pageSize)
@@ -66,9 +67,9 @@ namespace QuotesApi.Controllers
         }
 
         /// <summary>
-        /// List all public gists sorted by most recently updated to least recently updated.
+        /// List all quotes which are of the specified type.
         /// </summary>
-        /// <remarks>With pagination, you can fetch up to 3000 gists. For example, you can fetch 100 pages with 30 gists per page or 30 pages with 100 gists per page.</remarks>
+        /// <param name="type"></param>
         [HttpGet("[action]")]
         [ProducesResponseType(200, Type = typeof(Quote[]))]
         public IActionResult SearchQuote(string type)
@@ -79,9 +80,9 @@ namespace QuotesApi.Controllers
         }
 
         /// <summary>
-        /// List all public gists sorted by most recently updated to least recently updated.
+        /// List all quotes that have been uploaded by the authenticated user.
         /// </summary>
-        /// <remarks>With pagination, you can fetch up to 3000 gists. For example, you can fetch 100 pages with 30 gists per page or 30 pages with 100 gists per page.</remarks>
+        /// <param name="type"></param>
         [HttpGet("[action]")]
         [ProducesResponseType(200, Type = typeof(Quote[]))]
         public IActionResult MyQuotes(string type)
@@ -91,14 +92,14 @@ namespace QuotesApi.Controllers
 
             return StatusCode(StatusCodes.Status200OK, quotes);
         }
-        
+
         /// <summary>
-        /// List all public gists sorted by most recently updated to least recently updated.
+        /// List a specific quote.
         /// </summary>
-        /// <remarks>With pagination, you can fetch up to 3000 gists. For example, you can fetch 100 pages with 30 gists per page or 30 pages with 100 gists per page.</remarks>
+        /// <param name="id">The stored id of the quote object.</param>
         [HttpGet("{id}", Name = "Get")]
         [ProducesResponseType(200, Type = typeof(Quote))]
-        [ProducesResponseType(404, Type = typeof(void))]
+        [ProducesResponseType(404)]
         public IActionResult Get(int id)
         {
             var quote = _quotesDbContext.Quotes.Find(id);
@@ -112,19 +113,8 @@ namespace QuotesApi.Controllers
         }
 
         /// <summary>
-        /// List all public gists sorted by most recently updated to least recently updated.
+        /// Insert a new Quote into the database.
         /// </summary>
-        /// <remarks>With pagination, you can fetch up to 3000 gists. For example, you can fetch 100 pages with 30 gists per page or 30 pages with 100 gists per page.</remarks>
-        [HttpGet("[action]/{id}")]
-        public int Test(int id)
-        {
-            return id;
-        }
-
-        /// <summary>
-        /// List all public gists sorted by most recently updated to least recently updated.
-        /// </summary>
-        /// <remarks>With pagination, you can fetch up to 3000 gists. For example, you can fetch 100 pages with 30 gists per page or 30 pages with 100 gists per page.</remarks>
         [HttpPost]
         [ProducesResponseType(201, Type = typeof(void))]
         public IActionResult Post([FromBody] Quote quote)
@@ -137,13 +127,13 @@ namespace QuotesApi.Controllers
         }
 
         /// <summary>
-        /// List all public gists sorted by most recently updated to least recently updated.
+        /// Update a specific Quote in the database.
         /// </summary>
-        /// <remarks>With pagination, you can fetch up to 3000 gists. For example, you can fetch 100 pages with 30 gists per page or 30 pages with 100 gists per page.</remarks>
+        /// <param name="id">The id of the quote.</param>
         [HttpPut("{id}")]
         [ProducesResponseType(200, Type = typeof(void))]
-        [ProducesResponseType(403, Type = typeof(void))]
-        [ProducesResponseType(404, Type = typeof(void))]
+        [ProducesResponseType(403)]
+        [ProducesResponseType(404)]
         public IActionResult Put(int id, [FromBody] Quote newQuote)
         {
             string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
@@ -170,13 +160,13 @@ namespace QuotesApi.Controllers
         }
 
         /// <summary>
-        /// List all public gists sorted by most recently updated to least recently updated.
+        /// Delete a specific Quote in the database.
         /// </summary>
-        /// <remarks>With pagination, you can fetch up to 3000 gists. For example, you can fetch 100 pages with 30 gists per page or 30 pages with 100 gists per page.</remarks>
+        /// <param name="id">The id of the quote.</param>
         [HttpDelete("{id}")]
         [ProducesResponseType(200, Type = typeof(void))]
-        [ProducesResponseType(403, Type = typeof(void))]
-        [ProducesResponseType(404, Type = typeof(void))]
+        [ProducesResponseType(403)]
+        [ProducesResponseType(404)]
         public IActionResult Delete(int id)
         {
             string userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
